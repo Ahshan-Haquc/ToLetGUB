@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- this is for using google font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap"
+      rel="stylesheet"
+    />
+    <!-- this is for adding css style -->
+    <link rel="stylesheet" href="sideNavBar.css" />
+    <link rel="stylesheet" href="headerNavBar.css" />
+    <link rel="stylesheet" href="homePage.css" />
+  </head>
+
+  <body>
+    <!-- header nav bar -->
+    <%- include("layout/headerNavBar") %>
+
+    <!-- side nav bar -->
+    <%- include("layout/sideNavBar") %>
+
+    <!-- home page content -->
+    <div class="contentBox">
+      <div class="contentBoxHeading">
+        <h3>Find Your Destination</h3>
+        <p>
+          are you looking for a suitable rent room? Then choose a rent renge.
+        </p>
+      </div>
+
+      <div class="contentBoxService">
+        <!-- service 1 -->
+        <div
+          class="service"
+          class="service1"
+          onclick="window.location.href='/seePostOne'"
+        >
+          <div class="serviceHead"></div>
+          <div class="serviceRent">
+            <p style="color: rgba(0, 0, 0, 0.648)">
+              ------- Rent Renge -------
+            </p>
+            <h2 class="poetsen-one-regular">1000TK - 1500TK</h2>
+          </div>
+          <div class="serviceAvailable">
+            Available :
+            <div class="availableCount"><%= availableSeat.r1 %></div>
+          </div>
+        </div>
+        <!-- service 2 -->
+        <div
+          class="service"
+          class="service1"
+          onclick="window.location.href='/seePostTwo'"
+        >
+          <div class="serviceHead"></div>
+          <div class="serviceRent">
+            <p style="color: rgba(0, 0, 0, 0.648)">
+              ------- Rent Renge -------
+            </p>
+            <h2 class="poetsen-one-regular">1500TK - 2000TK</h2>
+          </div>
+          <div class="serviceAvailable">
+            Available :
+            <div class="availableCount"><%= availableSeat.r2 %></div>
+          </div>
+        </div>
+        <!-- service 3 -->
+        <a href="/seePost3">
+          <div class="service" class="service1">
+            <div class="serviceHead"></div>
+            <div class="serviceRent">
+              <p style="color: rgba(0, 0, 0, 0.648)">
+                ------- Rent Renge -------
+              </p>
+              <h2 class="poetsen-one-regular">2000TK - 2500TK</h2>
+            </div>
+            <div class="serviceAvailable">
+              Available :
+              <div class="availableCount"><%= availableSeat.r3 %></div>
+            </div>
+          </div>
+        </a>
+        <!-- service 4 -->
+        <a href="/seePost4">
+          <div class="service" class="service1">
+            <div class="serviceHead"></div>
+            <div class="serviceRent">
+              <p style="color: rgba(0, 0, 0, 0.648)">
+                ------- Rent Renge -------
+              </p>
+              <h2 class="poetsen-one-regular">2500TK - 3000TK</h2>
+            </div>
+            <div class="serviceAvailable">
+              Available :
+              <div class="availableCount"><%= availableSeat.r4 %></div>
+            </div>
+          </div>
+        </a>
+        <!-- service 5 -->
+        <a href="/seePost5">
+          <div class="service" class="service1">
+            <div class="serviceHead"></div>
+            <div class="serviceRent">
+              <p style="color: rgba(0, 0, 0, 0.648)">
+                ------- Rent Renge -------
+              </p>
+              <h2 class="poetsen-one-regular">3000TK - 3500TK</h2>
+            </div>
+            <div class="serviceAvailable">
+              Available :
+              <div class="availableCount"><%= availableSeat.r5 %></div>
+            </div>
+          </div>
+        </a>
+        <!-- service 6 -->
+        <a href="/seePost6">
+          <div class="service" class="service1">
+            <div class="serviceHead"></div>
+            <div class="serviceRent">
+              <p style="color: rgba(0, 0, 0, 0.648)">
+                ------- Rent Renge -------
+              </p>
+              <h2 class="poetsen-one-regular">3500TK - 4000TK</h2>
+            </div>
+            <div class="serviceAvailable">
+              Available :
+              <div class="availableCount"><%= availableSeat.r6 %></div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="goTogether">cholo aksathe</div>
+    </div>
+  </body>
+</html>
