@@ -18,7 +18,6 @@ const studentInformationSchema = mongoose.Schema({
     email:{
         type: String,
         require: true,
-        unique: true,
     },
     password:{
         type: String,
@@ -27,7 +26,6 @@ const studentInformationSchema = mongoose.Schema({
     phone:{
         type: String,
         require: true,
-        unique: true,
     },
     gender:{
         type: String,

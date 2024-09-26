@@ -42,8 +42,9 @@ route.post("/signup", async (req, res, next) => {
 
     //rendering in login.ejs page
     console.log("Sign up succesful.");
-    res.status(200).render("login");
+    res.status(200).render("login",{ error: false });
   } catch (err) {
+    console.log(err);
     if (err.code === 11000) {
       // Duplicate key error code
       res
