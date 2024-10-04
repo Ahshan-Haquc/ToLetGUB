@@ -1,11 +1,12 @@
 const PostShareModel = require("../models/postShareSchema");
 
 const availableSeatFetch = async (req, res, next) => {
+  console.log("working available seat fetch middleware.");
   try {
     //all post share collection fetch korlam
     const postInfo = await PostShareModel.find({});
 
-    let rangeTkAvailable = [0, 0, 0, 0, 0, 0];
+    let rangeTkAvailable = [0, 0, 0, 0, 0, 0]; //6ta range tai 6 ta array element rakhsi, egula count korbe ei range a koyta total seat available ase
 
     //available count kortesi j ei rent range a koyta seat available ase
     for (let i = 0; i < postInfo.length; i++) {
@@ -37,7 +38,7 @@ const availableSeatFetch = async (req, res, next) => {
 
     //req a ei obj ta pathiye dilam, er vitor count gula ase
     req.availableSeatFetch = obj;
-
+    console.log("available seat fetched succesfull.");
     next();
   } catch (error) {
     next(error);

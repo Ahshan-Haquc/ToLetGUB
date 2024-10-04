@@ -99,3 +99,37 @@ a:hover {
   top: 50px;
   left: 0px;
 }
+
+/* popup window for login of unauthorize user  */
+/* Overlay to gray out the background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Gray color with 50% transparency */
+  visibility: hidden;
+  z-index: 500; /* Ensure the overlay is behind the alert */
+}
+
+/* Alert popup */
+.alert {
+  background-color: rgb(255, 246, 212);
+  border: 2px solid yellow;
+  border-radius: 10px;
+  height: 250px;
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  visibility: hidden;
+  z-index: 501; /* Ensure the alert is above the overlay */
+}
+
+/* To make both the overlay and alert visible */
+.alertVisible {
+  visibility: visible;
+}

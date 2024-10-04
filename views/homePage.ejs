@@ -37,6 +37,23 @@
     <!-- side nav bar -->
     <%- include("layout/sideNavBar") %>
 
+    <!--popup window for unauthenticate person's login -->
+    <!-- Overlay to gray out the background -->
+    <div
+      class="overlay <%= userAuthenticationError ? 'alertVisible' : ''%>"
+      id="overlay"
+    ></div>
+    <div
+      class="alert <%= userAuthenticationError ? 'alertVisible' : ''%>"
+      id="alertBox"
+    >
+      <h2>Please Login!!!</h2>
+      <h3>Without login you can't do this activity.</h3>
+      <form action="/login" method="get">
+        <button class="btn btn-success btn-lg">Login</button>
+      </form>
+    </div>
+
     <!-- home page content -->
     <div class="contentBox">
       <div class="contentBoxHeading">

@@ -57,40 +57,35 @@ route.post("/signup", async (req, res, next) => {
 });
 
 //routers for login without error means studentId or password is correct while just want to see the login page
-route.get("/login", (req, res) => {
-  res.render("login", { error: false });
+route.get("/login",accessPermission, (req, res) => {
+  const redirectTo = req.query.redirect || '/homePage';  // Default to homepage if no redirect provided
+  res.render("login", { error: false, redirect: redirectTo, student: req.studentInfo });
 });
+
 
 route.post("/login", availableSeatFetch, async (req, res, next) => {
   try {
     const user = await Model.findOne({ studentId: req.body.studentId });
 
-    //generating token
-    const token = await user.generateToken();
-
-    //generating cookie using that token
-    res.cookie("studentCookie", token, {
-      expires: new Date(Date.now() + 600000),
-      httpOnly: true,
-    });
-
     if (user) {
-      const isValidPassword = await bcrypt.compare(
-        req.body.password,
-        user.password
-      );
+      const isValidPassword = await bcrypt.compare(req.body.password, user.password);
       if (isValidPassword) {
-        res.redirect('/homePage');
+        // Generate token and set cookie
+        const token = await user.generateToken();
+        res.cookie("studentCookie", token, { expires: new Date(Date.now() + 600000), httpOnly: true });
+
+        // Redirect to intended page after successful login
+        const redirectTo = req.query.redirect || '/homePage';
+        res.redirect(redirectTo);
       } else {
         res.status(400).render("login", { error: true });
       }
     }
   } catch (err) {
-    // {error: true}
-    //eitar mane jokhon kono input wrong dibo tokhon error namer akta flag dilam jate .ejs file a if condition diye bujte pari j error hoyese ajonno visibility property ta visible set kore dibo
     res.status(500).render("login", { error: true });
   }
 });
+
 
 //router for logout
 route.post("/logout", accessPermission, async (req, res) => {
@@ -102,15 +97,41 @@ route.post("/logout", accessPermission, async (req, res) => {
   res.render("login");
 });
 
+//router for handle an user access------------new
+route.get('/check-auth',accessPermission,availableSeatFetch, (req, res) => {
+  const redirectTo = req.query.redirect;  // Get the page they want to access
+
+  if(req.unAuthenticateUser){
+    res.render("homePage", {
+       userAuthenticationError: true,
+       student: req.studentInfo,
+       availableSeat: req.availableSeatFetch,
+      });
+  }else{
+    if (!req.cookies.studentCookie) {
+      // If not authenticated, redirect to login with intended page as query
+      res.redirect(`/login?redirect=${redirectTo}`);
+    } else {
+      // If authenticated, go to the intended page
+      res.redirect(redirectTo);
+    }
+  }
+});
+
+
 //router for home page
-route.get("/homePage",
-  accessPermission,
-  availableSeatFetch,
-  async (req, res) => {
+route.get("/homePage",accessPermission, availableSeatFetch, (req, res) => {
+    console.log("working homepage router");
     try {
-      res.status(200).render("homePage", {
+      // res.status(200).render("homePage", {
+      //   // student: req.studentInfo,
+      //   availableSeat: req.availableSeatFetch,
+      //   // userError: false //error false means popup window will not appear when just visiting the home page
+      // });
+      res.status(200).render("homePage",{
+        availableSeat : req.availableSeatFetch,
         student: req.studentInfo,
-        availableSeat: req.availableSeatFetch,
+        userAuthenticationError: false,
       });
     } catch (error) {
       console.log(error);
@@ -146,9 +167,17 @@ route.get("/messages", accessPermission, (req, res) => {
 });
 
 //router for get post share page
-route.get("/postShare", accessPermission, (req, res) => {
-  console.log("working get method.");
-  res.status(200).render("postShare", { student: req.studentInfo });
+route.get("/postShare", accessPermission,availableSeatFetch, (req, res) => {
+  console.log("working post share get method.");
+  if(req.unAuthenticateUser){
+    res.render("homePage", {
+       userAuthenticationError: true,
+       student: req.studentInfo,
+       availableSeat: req.availableSeatFetch,
+      });
+  }else{
+    res.status(200).render("postShare", { student: req.studentInfo });
+  }
 });
 
 //router for post share post
@@ -168,16 +197,6 @@ route.post("/postShare",accessPermission,availableSeatFetch,async (req, res, nex
 
       res.redirect('/homePage');
 
-      // //this is for insert the post values into the post share collection (one to many)
-      // const postModel = new PostShareModel(req.body);
-      // const savedPost = await postModel.save();
-
-      // console.log("after saving the post in db : ", savedPost);
-
-      // //student collection a ei post tar info push korbo jokhon kono new post korbe se
-      // await Model.updateOne({_id:req.studentInfo._id},{$push : {posts: savedPost._id}});
-
-      // res.status(200).render('homePage',{student: req.studentInfo});
     } catch (error) {
       console.log("error occur during post share : ", error);
       next(error);

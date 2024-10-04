@@ -20,7 +20,7 @@
     <%- include("layout/headerNavBar") %>
     <div class="container containerTwo">
       <h1>Log in</h1>
-      <form action="/login" method="post" id="form">
+      <form action="/login?redirect=<%= redirect %>" method="post" id="form">
         <div class="form-group">
           <label for="email">Student Id:</label>
           <input
