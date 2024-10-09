@@ -8,7 +8,7 @@ const availableSeatFetch = require("../middlewares/availableSeatFetch");
 
 //routers for signup
 route.get("/signup", (req, res) => {
-  res.render("signup");
+  res.render("signup",{student:false});
 });
 
 route.post("/signup", async (req, res, next) => {
@@ -42,7 +42,9 @@ route.post("/signup", async (req, res, next) => {
 
     //rendering in login.ejs page
     console.log("Sign up succesful.");
-    res.status(200).render("login",{ error: false });
+    // Redirect to intended page after successful login
+    const redirectTo = req.query.redirect || '/homePage';
+        res.redirect(redirectTo);
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -94,7 +96,8 @@ route.post("/logout", accessPermission, async (req, res) => {
   res.clearCookie("studentCookie");
   await req.studentInfo.save();
 
-  res.render("login");
+  const redirectTo = req.query.redirect || '/homePage';  // Default to homepage if no redirect provided
+  res.render("login", { error: false, redirect: redirectTo, student: false });
 });
 
 //router for handle an user access------------new

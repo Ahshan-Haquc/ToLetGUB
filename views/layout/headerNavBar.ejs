@@ -6,7 +6,7 @@
     </div>
     <div id="search">
       <form>
-        <div class="input-group">
+        <div class="input-group <%= student ? 'logoutVisible' : ''%>">
           <input type="text" class="form-control" placeholder="Search" />
           <div class="input-group-btn">
             <button class="btn btn-success" type="submit">

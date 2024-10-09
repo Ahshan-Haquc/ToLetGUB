@@ -13,7 +13,7 @@ const studentInformationSchema = mongoose.Schema({
     studentId:{
         type: Number,
         require: true,
-        unique: true,
+        unique: true, 
     },
     email:{
         type: String,
