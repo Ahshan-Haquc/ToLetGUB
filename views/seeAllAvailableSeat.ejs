@@ -41,24 +41,8 @@
 
     <!-- post page content -->
     <div class="contentBox">
-      <% if(seePost.length==0){ %>
-      <div id="noSeatFound">
-        <h1>No Seat Available in this Location & Range !!!</h1>
-        <p>
-          Please go to home Page and try with another rent range or location
-        </p>
-        <img src="images\no-results.png" alt="" />
-      </div>
-      <% } else { %>
-      <!-- show kortesi j koyta seat pawa gese ei range r location er moddhe -->
-      <div class="post_area top_area">
-        <img src="images\icons8-festival-48.png" alt="" />
-        &nbsp;A total of <%= seePost.length %> availabe seat were matched by
-        that rent range & location. Thank you!&nbsp;
-        <img src="images\icons8-festival-48.png" alt="" />
-      </div>
-      <!-- ei location & range er post gula akta akta kore show korabo eita diye -->
-      <% seePost.forEach((post)=>{ %>
+      <!-- ei category range er post gula akta akta kore show korabo eita diye -->
+      <% totalSeatAvailable.forEach((post)=>{ %>
       <div class="post_area">
         <!-- starting post info heading -->
         <div class="post_post_area">
@@ -146,7 +130,7 @@
       </div>
       <!-- here post area div is end -->
 
-      <% }) %> <% } %>
+      <% }) %>
     </div>
   </body>
   <!-- ahsan new -->

@@ -91,6 +91,19 @@ li a {
   margin-bottom: 5px;
   display: flex;
 }
+.top_area {
+  height: 50px;
+  background-color: oldlace;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+.top_area img {
+  height: 30px;
+  width: 30px;
+}
+
 #p_head_color {
   background-color: rgba(153, 255, 0, 0.644);
 }
@@ -161,4 +174,17 @@ li a {
 }
 #h2_color {
   color: var(--color2);
+}
+
+/* this will show when no result will found after filtering by range and location */
+#noSeatFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 100px;
+}
+#noSeatFound img {
+  height: 300px;
+  width: 300px;
 }
