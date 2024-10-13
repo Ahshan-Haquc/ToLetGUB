@@ -193,7 +193,6 @@ route.post("/postShare",accessPermission,availableSeatFetch,async (req, res, nex
         { _id: savedPost._id },
         { $set: { studentPostedId: req.studentInfo._id } }
       );
-
       res.redirect('/homePage');
 
     } catch (error) {
