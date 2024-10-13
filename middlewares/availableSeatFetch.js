@@ -6,6 +6,13 @@ const availableSeatFetch = async (req, res, next) => {
     //all post share collection fetch korlam
     const postInfo = await PostShareModel.find({});
 
+    //total koto gula seat available post ase ta getch korlm
+    const totalSeatAvailable = await PostShareModel.find({available:'yes'});
+
+    req.totalSeatAvailable = totalSeatAvailable;
+    req.totalSeatAvailableLength = totalSeatAvailable.length;
+
+    //eita range er jonno
     let rangeTkAvailable = [0, 0, 0, 0, 0, 0]; //6ta range tai 6 ta array element rakhsi, egula count korbe ei range a koyta total seat available ase
 
     //available count kortesi j ei rent range a koyta seat available ase
@@ -24,7 +31,6 @@ const availableSeatFetch = async (req, res, next) => {
         rangeTkAvailable[5]++;
       }
     }
-    console.log(rangeTkAvailable);
     //array theke object a store korlam
     const obj = {
       r1: rangeTkAvailable[0],
@@ -34,7 +40,6 @@ const availableSeatFetch = async (req, res, next) => {
       r5: rangeTkAvailable[4],
       r6: rangeTkAvailable[5],
     };
-    console.log(obj);
 
     //req a ei obj ta pathiye dilam, er vitor count gula ase
     req.availableSeatFetch = obj;
@@ -46,3 +51,4 @@ const availableSeatFetch = async (req, res, next) => {
 };
 
 module.exports = availableSeatFetch;
+

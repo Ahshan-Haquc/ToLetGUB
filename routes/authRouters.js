@@ -126,13 +126,9 @@ route.get('/check-auth',accessPermission,availableSeatFetch, (req, res) => {
 route.get("/homePage",accessPermission, availableSeatFetch, (req, res) => {
     console.log("working homepage router");
     try {
-      // res.status(200).render("homePage", {
-      //   // student: req.studentInfo,
-      //   availableSeat: req.availableSeatFetch,
-      //   // userError: false //error false means popup window will not appear when just visiting the home page
-      // });
       res.status(200).render("homePage",{
         availableSeat : req.availableSeatFetch,
+        totalSeatAvailableLength : req.totalSeatAvailableLength,
         student: req.studentInfo,
         userAuthenticationError: false,
       });
@@ -207,14 +203,51 @@ route.post("/postShare",accessPermission,availableSeatFetch,async (req, res, nex
   }
 );
 
-route.get("/seePostOne",accessPermission, async (req, res, next) => {
+
+
+
+//home page content part (means services routers)
+route.get('/totalPostAvailable',accessPermission,availableSeatFetch,(req,res)=>{
   try {
+    console.log("totalSeatAvailable router working.");
+    res.status(200).render("seeAllAvailableSeat",{
+      totalSeatAvailable : req.totalSeatAvailable,
+      student: req.studentInfo,
+      userAuthenticationError: false,
+    })
+  } catch (error) {
+    console.log("/totalPostAvailable error: ",error);
+    next(error);
+  }
+})
+
+//success rate page
+route.get('/successRateSee',accessPermission,availableSeatFetch,(req,res)=>{
+  try {
+    res.status(200).render("successRatePost",{
+      student: req.studentInfo,
+      userAuthenticationError: false,
+    })
+  } catch (error) {
+    console.log("success rate router error: ",error);
+    next(error);
+  }
+})
+
+
+
+route.post("/findSeatByFiltering",accessPermission, async (req, res, next) => {
+  try {
+    //taking range limit and location from input in the ejs file
+    const rangeLimitStart = req.body.renge1;
+    const rangeLimitEnd = req.body.renge2;
+    const houseLocation = req.body.location;
+
       //finding kon kon collection er rent 500tk theke 1500tk er moddhe
       const findSharedPostInRange = await PostShareModel.find({
-        rent: { $gte: 1, $lt: 1500 }
+        rent: { $gte: rangeLimitStart, $lte: rangeLimitEnd },locationDistick: houseLocation
         });
     
-        console.log("Range post fetched successful.");
 
   res.status(200).render('seePostByRange',{
     student: req.studentInfo,
@@ -226,26 +259,7 @@ route.get("/seePostOne",accessPermission, async (req, res, next) => {
       next(error);
   }
 });
-route.get("/seePostTwo",accessPermission, async (req, res, next) => {
-  try {
-      //finding kon kon collection er rent 500tk theke 1500tk er moddhe
-      const findSharedPostInRange = await PostShareModel.find({
-        rent: { $gte: 1500, $lt: 2000 }
-        });
-    
-        console.log("Range post fetched successful.");
 
-  res.status(200).render('seePostByRange',{
-    student: req.studentInfo,
-    seePost: findSharedPostInRange
-  })
-  
-  } catch (error) {
-      console.log(error);
-      next(error);
-  }
-});
-// aro 5 ta banate hobe see post
 
 module.exports = route;
 
